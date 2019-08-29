@@ -69,6 +69,7 @@ func build(projectName string, targetOS string, vmArguments []string) {
 		os.Exit(1)
 	}
 	outputBinaryPath := filepath.Join(outputDirectoryPath, outputBinaryName)
+	fmt.Println("hover: Build output to "+outputBinaryPath)
 
 	var engineCachePath string
 	if buildCachePath != "" {
@@ -76,7 +77,7 @@ func build(projectName string, targetOS string, vmArguments []string) {
 	} else {
 		engineCachePath = enginecache.ValidateOrUpdateEngine(targetOS)
 	}
-
+	fmt.Println("hover: Build Engine cache "+engineCachePath)
 	err = os.RemoveAll(outputDirectoryPath)
 	if err != nil {
 		fmt.Printf("hover: failed to clean output directory %s: %v\n", outputDirectoryPath, err)
@@ -118,6 +119,11 @@ func build(projectName string, targetOS string, vmArguments []string) {
 		"--manifest", buildManifest,
 		trackWidgetCreation,
 	)
+	fmt.Println("Command:")
+	fmt.Println("	Env:" + strings.Join(cmdFlutterBuild.Env,"\n"))
+	fmt.Println("	Dir:" + cmdFlutterBuild.Dir)
+	fmt.Println("	" + strings.Join(cmdFlutterBuild.Args," "))
+
 	cmdFlutterBuild.Stderr = os.Stderr
 	cmdFlutterBuild.Stdout = os.Stdout
 	err = cmdFlutterBuild.Run()
@@ -198,6 +204,11 @@ func build(projectName string, targetOS string, vmArguments []string) {
 	)
 	cmdGoGetU.Stderr = os.Stderr
 	cmdGoGetU.Stdout = os.Stdout
+	
+	fmt.Println("Command:")
+	fmt.Println("	Env:" + strings.Join(cmdGoGetU.Env,"\n"))
+	fmt.Println("	Dir:" + cmdGoGetU.Dir)
+	fmt.Println("	" + strings.Join(cmdGoGetU.Args," "))
 
 	err = cmdGoGetU.Run()
 	if err != nil {
@@ -212,6 +223,11 @@ func build(projectName string, targetOS string, vmArguments []string) {
 	)
 	cmdGoModDownload.Stderr = os.Stderr
 	cmdGoModDownload.Stdout = os.Stdout
+
+	fmt.Println("Command:")
+	fmt.Println("	Env:" + strings.Join(cmdGoModDownload.Env,"\n"))
+	fmt.Println("	Dir:" + cmdGoModDownload.Dir)
+	fmt.Println("	" + strings.Join(cmdGoModDownload.Args," "))
 
 	err = cmdGoModDownload.Run()
 	if err != nil {
@@ -242,6 +258,10 @@ func build(projectName string, targetOS string, vmArguments []string) {
 		"GO111MODULE=on",
 		"CGO_LDFLAGS="+cgoLdflags,
 	)
+	fmt.Println("Command:")
+	fmt.Println("	Env:" + strings.Join(cmdGoBuild.Env,"\n"))
+	fmt.Println("	Dir:" + cmdGoBuild.Dir)
+	fmt.Println("	" + strings.Join(cmdGoBuild.Args," "))
 
 	cmdGoBuild.Stderr = os.Stderr
 	cmdGoBuild.Stdout = os.Stdout

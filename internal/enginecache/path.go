@@ -10,10 +10,14 @@ import (
 )
 
 func cachePath() string {
-	homePath, err := homedir.Dir()
-	if err != nil {
-		fmt.Printf("hover: Failed to resolve home path: %v\n", err)
-		os.Exit(1)
+	homePath := os.Getenv("HOVER_HOME")
+	if homePath == "" {
+		path, err := homedir.Dir()
+		if err != nil {
+			fmt.Printf("hover: Failed to resolve home path: %v\n", err)
+			os.Exit(1)
+		}
+		homePath = path
 	}
 
 	var p string

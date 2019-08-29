@@ -9,7 +9,8 @@ import (
 	"path/filepath"
 	"regexp"
 	"runtime"
-
+	"strings"
+	
 	"github.com/spf13/cobra"
 )
 
@@ -37,6 +38,9 @@ var runCmd = &cobra.Command{
 
 		// forcefully enable --debug (which is not an option for `hover run`)
 		buildDebug = true
+
+		fmt.Println("hover: build ProjectName "+projectName)
+		fmt.Println("hover: build OS "+targetOS)
 
 		build(projectName, targetOS, []string{"--observatory-port=50300"})
 		fmt.Println("hover: build finished, starting app...")
@@ -79,6 +83,11 @@ func runAndAttach(projectName string, targetOS string) {
 
 	// Non-blockingly echo command stderr to terminal
 	go io.Copy(os.Stderr, stderrApp)
+	
+	fmt.Println("Command:")
+	fmt.Println("	Env:" + strings.Join(cmdApp.Env,"\n"))
+	fmt.Println("	Dir:" + cmdApp.Dir)
+	fmt.Println("	" + strings.Join(cmdApp.Args," "))
 
 	err = cmdApp.Start()
 	if err != nil {
@@ -108,6 +117,12 @@ func startHotReloadProcess(cmdFlutterAttach *exec.Cmd, buildTargetMainDart strin
 		"--device-id", "flutter-tester",
 		"--debug-uri", uri,
 	}
+
+	fmt.Println("Command:")
+	fmt.Println("	Env:" + strings.Join(cmdFlutterAttach.Env,"\n"))
+	fmt.Println("	Dir:" + cmdFlutterAttach.Dir)
+	fmt.Println("	" + strings.Join(cmdFlutterAttach.Args," "))
+
 	err := cmdFlutterAttach.Start()
 	if err != nil {
 		fmt.Printf("hover: flutter attach failed: %v Hotreload disabled\n", err)

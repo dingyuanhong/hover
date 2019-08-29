@@ -7,7 +7,8 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-
+	"strings"
+	
 	"github.com/spf13/cobra"
 )
 
@@ -68,6 +69,12 @@ var initCmd = &cobra.Command{
 		)
 		cmdGoModInit.Stderr = os.Stderr
 		cmdGoModInit.Stdout = os.Stdout
+
+		fmt.Println("Command:")
+		fmt.Println("	Env:" + strings.Join(cmdGoModInit.Env,"\n"))
+		fmt.Println("	Dir:" + cmdGoModInit.Dir)
+		fmt.Println("	" + strings.Join(cmdGoModInit.Args," "))
+
 		err = cmdGoModInit.Run()
 		if err != nil {
 			fmt.Printf("hover: Go mod init failed: %v\n", err)
@@ -82,6 +89,12 @@ var initCmd = &cobra.Command{
 		)
 		cmdGoModTidy.Stderr = os.Stderr
 		cmdGoModTidy.Stdout = os.Stdout
+
+		fmt.Println("Command:")
+		fmt.Println("	Env:" + strings.Join(cmdGoModTidy.Env,"\n"))
+		fmt.Println("	Dir:" + cmdGoModTidy.Dir)
+		fmt.Println("	" + strings.Join(cmdGoModTidy.Args," "))
+
 		err = cmdGoModTidy.Run()
 		if err != nil {
 			fmt.Printf("hover: Go mod tidy failed: %v\n", err)

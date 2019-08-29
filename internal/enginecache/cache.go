@@ -237,6 +237,7 @@ func ValidateOrUpdateEngineAtPath(targetOS string, cachePath string) (engineCach
 		fmt.Printf("hover: Failed to create engine cache directory: %v\n", err)
 		os.Exit(1)
 	}
+	fmt.Println("hover: Engine cache path:" + engineCachePath)
 
 	targetedDomain := "https://storage.googleapis.com"
 	envURLFlutter := os.Getenv("FLUTTER_STORAGE_BASE_URL")
@@ -246,6 +247,8 @@ func ValidateOrUpdateEngineAtPath(targetOS string, cachePath string) (engineCach
 
 	// Retrieve the full version hash by querying github
 	url := fmt.Sprintf("https://api.github.com/repos/flutter/engine/commits/%s", requiredEngineVersion)
+	fmt.Println("hover: Request engine commits:" + url)
+
 	req, err := http.NewRequest("GET", os.ExpandEnv(url), nil)
 	if err != nil {
 		fmt.Printf("hover: Failed to create http request: %v\n", err)
@@ -310,6 +313,8 @@ func ValidateOrUpdateEngineAtPath(targetOS string, cachePath string) (engineCach
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println("hover: Engine download url:" + engineDownloadURL)
+	fmt.Println("hover: Artifacts download url:" + icudtlDownloadURL)
 
 	engineZipPath := filepath.Join(dir, "engine.zip")
 	engineExtractPath := filepath.Join(dir, "engine")
