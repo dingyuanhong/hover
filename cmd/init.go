@@ -8,7 +8,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
-	
+
 	"github.com/spf13/cobra"
 )
 
@@ -71,7 +71,7 @@ var initCmd = &cobra.Command{
 		cmdGoModInit.Stdout = os.Stdout
 
 		fmt.Println("Command:")
-		fmt.Println("	Env:" + strings.Join(cmdGoModInit.Env,"\n"))
+		// fmt.Println("	Env:" + strings.Join(cmdGoModInit.Env,"\n"))
 		fmt.Println("	Dir:" + cmdGoModInit.Dir)
 		fmt.Println("	" + strings.Join(cmdGoModInit.Args," "))
 
@@ -91,7 +91,7 @@ var initCmd = &cobra.Command{
 		cmdGoModTidy.Stdout = os.Stdout
 
 		fmt.Println("Command:")
-		fmt.Println("	Env:" + strings.Join(cmdGoModTidy.Env,"\n"))
+		// fmt.Println("	Env:" + strings.Join(cmdGoModTidy.Env,"\n"))
 		fmt.Println("	Dir:" + cmdGoModTidy.Dir)
 		fmt.Println("	" + strings.Join(cmdGoModTidy.Args," "))
 

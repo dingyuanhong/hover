@@ -10,7 +10,7 @@ import (
 	"regexp"
 	"runtime"
 	"strings"
-	
+
 	"github.com/spf13/cobra"
 )
 
@@ -85,7 +85,7 @@ func runAndAttach(projectName string, targetOS string) {
 	go io.Copy(os.Stderr, stderrApp)
 	
 	fmt.Println("Command:")
-	fmt.Println("	Env:" + strings.Join(cmdApp.Env,"\n"))
+	// fmt.Println("	Env:" + strings.Join(cmdApp.Env,"\n"))
 	fmt.Println("	Dir:" + cmdApp.Dir)
 	fmt.Println("	" + strings.Join(cmdApp.Args," "))
 
@@ -119,7 +119,7 @@ func startHotReloadProcess(cmdFlutterAttach *exec.Cmd, buildTargetMainDart strin
 	}
 
 	fmt.Println("Command:")
-	fmt.Println("	Env:" + strings.Join(cmdFlutterAttach.Env,"\n"))
+	// fmt.Println("	Env:" + strings.Join(cmdFlutterAttach.Env,"\n"))
 	fmt.Println("	Dir:" + cmdFlutterAttach.Dir)
 	fmt.Println("	" + strings.Join(cmdFlutterAttach.Args," "))
 

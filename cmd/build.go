@@ -120,7 +120,7 @@ func build(projectName string, targetOS string, vmArguments []string) {
 		trackWidgetCreation,
 	)
 	fmt.Println("Command:")
-	fmt.Println("	Env:" + strings.Join(cmdFlutterBuild.Env,"\n"))
+	// fmt.Println("	Env:" + strings.Join(cmdFlutterBuild.Env,"\n"))
 	fmt.Println("	Dir:" + cmdFlutterBuild.Dir)
 	fmt.Println("	" + strings.Join(cmdFlutterBuild.Args," "))
 
@@ -225,7 +225,7 @@ func build(projectName string, targetOS string, vmArguments []string) {
 	cmdGoModDownload.Stdout = os.Stdout
 
 	fmt.Println("Command:")
-	fmt.Println("	Env:" + strings.Join(cmdGoModDownload.Env,"\n"))
+	// fmt.Println("	Env:" + strings.Join(cmdGoModDownload.Env,"\n"))
 	fmt.Println("	Dir:" + cmdGoModDownload.Dir)
 	fmt.Println("	" + strings.Join(cmdGoModDownload.Args," "))
 
