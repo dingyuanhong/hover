@@ -150,6 +150,8 @@ func build(projectName string, targetOS string, vmArguments []string) {
 	if err != nil {
 		fmt.Printf("hover: Failed to copy %s: %v\n", engineFile, err)
 		os.Exit(1)
+	}   else {
+		fmt.Printf("hover: copy %s to %s success\n",engineFile,outputEngineFile)
 	}
 	if !buildDebug && targetOS == "linux" {
 		err = exec.Command("strip", "-s", outputEngineFile).Run()
@@ -166,6 +168,8 @@ func build(projectName string, targetOS string, vmArguments []string) {
 	if err != nil {
 		fmt.Printf("hover: Failed to copy icudtl.dat: %v\n", err)
 		os.Exit(1)
+	} else {
+		fmt.Printf("hover: copy icudtl.dat to %s success\n",filepath.Join(outputDirectoryPath, "icudtl.dat"))
 	}
 
 	err = copy.Copy(
@@ -175,6 +179,8 @@ func build(projectName string, targetOS string, vmArguments []string) {
 	if err != nil {
 		fmt.Printf("hover: Failed to copy desktop/assets: %v\n", err)
 		os.Exit(1)
+	} else {
+		fmt.Printf("hover: copy desktop/assets to %s success\n",filepath.Join(outputDirectoryPath, "assets"),)
 	}
 
 	var cgoLdflags string
@@ -206,7 +212,10 @@ func build(projectName string, targetOS string, vmArguments []string) {
 	cmdGoGetU.Stdout = os.Stdout
 	
 	fmt.Println("Command:")
-	fmt.Println("	Env:" + strings.Join(cmdGoGetU.Env,"\n"))
+	fmt.Println("	Env:\n\t" + strings.Join(append([]string{},
+		"GO111MODULE=on",
+		"CGO_LDFLAGS="+cgoLdflags,
+	),"\n\t\t"))
 	fmt.Println("	Dir:" + cmdGoGetU.Dir)
 	fmt.Println("	" + strings.Join(cmdGoGetU.Args," "))
 
@@ -259,7 +268,10 @@ func build(projectName string, targetOS string, vmArguments []string) {
 		"CGO_LDFLAGS="+cgoLdflags,
 	)
 	fmt.Println("Command:")
-	fmt.Println("	Env:" + strings.Join(cmdGoBuild.Env,"\n"))
+	fmt.Println("	Env:\t" + strings.Join(append([]string{},
+		"GO111MODULE=on",
+		"CGO_LDFLAGS="+cgoLdflags,
+	),"\n\t\t"))
 	fmt.Println("	Dir:" + cmdGoBuild.Dir)
 	fmt.Println("	" + strings.Join(cmdGoBuild.Args," "))
 
